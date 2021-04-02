@@ -773,7 +773,7 @@ class NewBusArrival_18211(Document):
 
 ## TELEGRAM BOT ##########
 chat_id =  # Tele ID of the Receiver
-api_token = '1471285291:AAG8BC7qpgJoDcVpy5nTcgDOEaX4sfOoxCU' 
+api_token = '' 
 base_url = 'https://api.telegram.org/bot{}/'.format(api_token)
 
 sendMsg_url = base_url + 'sendMessage'

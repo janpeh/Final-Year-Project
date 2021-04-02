@@ -8,7 +8,7 @@ def change_to_date(row):
     row["first_next_bus_estimated_arrival"] = datetime.strptime(str(row["first_next_bus_estimated_arrival"][0:-7]), "%Y,%m,%d,%H,%M,%S")
     return row
 
-#True if bus is late, False if not late
+#True if bus is late, False if not latee
 def check_late():
     df["late"] = np.where(df["date_time"] > df["first_next_bus_estimated_arrival"], True, False)
 
