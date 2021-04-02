@@ -7,7 +7,7 @@ import datetime
 from datetime import datetime
 
 ########## DATABASE START ##########
-DB_URL = "mongodb+srv://fypuser:ngongpeh@fypdb.trkbv.mongodb.net/FYPDB"
+DB_URL = ""
 connect(host=DB_URL)
 print("Connected to Database")
 
@@ -21,7 +21,7 @@ class UpdatedTaxiAvailability_2nd(Document):
 ## DATABASE END ##########
 
 ## TELEGRAM BOT ##########
-chat_id =  318884665 
+chat_id =  # Tele ID of the Receiver 
 api_token = '1471285291:AAG8BC7qpgJoDcVpy5nTcgDOEaX4sfOoxCU'
 base_url = 'https://api.telegram.org/bot{}/'.format(api_token)
 
@@ -39,7 +39,7 @@ while True:
 
         try:
             #Authentication parameters
-            headers = {'AccountKey' : 'Nk91O+tpSNC/0uiNZA3obQ==', 'accept' : 'application/json'}
+            headers = {'AccountKey' : '', 'accept' : 'application/json'}
 
             # TAXI AVAILABILITY | TAXI COORDINATES - by Time and Date (source: Data.Gov)
             api_taxi_availability = requests.get('https://api.data.gov.sg/v1/transport/taxi-availability')

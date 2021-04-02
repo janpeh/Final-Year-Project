@@ -7,7 +7,7 @@ import time
 import datetime
 
 ########## DATABASE START ##########
-DB_URL = "mongodb+srv://fypuser:ngongpeh@fypdb.trkbv.mongodb.net/FYPDB"
+DB_URL = ""
 connect(host=DB_URL)
 print("Connected to Database")
 
@@ -209,7 +209,7 @@ class NewBusArrival_18129_2nd(Document):
     second_bus_latitude = FloatField()
     second_bus_longitude = FloatField()
 ## TELEGRAM BOT ##########
-chat_id =  318884665 
+chat_id =  # Tele ID of the Receiver
 api_token = '1471285291:AAG8BC7qpgJoDcVpy5nTcgDOEaX4sfOoxCU'
 base_url = 'https://api.telegram.org/bot{}/'.format(api_token)
 
@@ -227,7 +227,7 @@ while True:
         try:
 
             #Authentication parameters
-            headers = {'AccountKey' : 'Nk91O+tpSNC/0uiNZA3obQ==', 'accept' : 'application/json'}
+            headers = {'AccountKey' : '', 'accept' : 'application/json'}
 
             # BUS ARRIVAL TIMINGS (6 Stops) | BUS FREQUENCY (source: Datamall) #Every data should be stored throughout the day
 
