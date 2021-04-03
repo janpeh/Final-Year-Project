@@ -29,6 +29,17 @@ df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
 df_taxi = df_taxi.groupby(["date", "count"], as_index=False).size()
 fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative")
 
+# Weather Graph
+df_weather = pd.read_csv("./data/WeatherDataCleaned.csv")
+df_weather["combined"] = pd.to_datetime(df_weather["combined"], format="%d/%m/%Y")
+df_weather["Daily_Rainfall_Total(mm)"] = df_weather["Daily_Rainfall_Total(mm)"].replace("-", "0")
+df_weather["Daily_Rainfall_Total(mm)"] = df_weather["Daily_Rainfall_Total(mm)"].astype(float)
+weatherfig = px.line(df_weather, x="combined", y="Daily_Rainfall_Total(mm)",
+                labels={
+                    "Daily_Rainfall_Total(mm)": "Total Daily Rainfall (mm)",
+                    "combined": "Date"
+                })
+
 #set content of tab1
 tab1_content = dbc.Card(
     dbc.CardBody(
@@ -131,6 +142,18 @@ tab1_content = dbc.Card(
                         html.Div("Shuttle Bus Dispatch Count - Dummy Data", className="card-header"),
                         html.Div([
                             dcc.Graph(figure=shutfig),
+                        ]),
+                    ],
+                    # className="card border-primary mb-3"
+                    ),
+                ]),
+
+                dbc.Row(
+                [
+                    dbc.Col([
+                        html.Div("Weather Data", className="card-header"),
+                        html.Div([
+                            dcc.Graph(figure=weatherfig),
                         ]),
                     ],
                     # className="card border-primary mb-3"
@@ -422,6 +445,18 @@ tab2_content = dbc.Card(
                         html.Div([
                             # html.P("SEA - Seats Available | SDA - Standing Available | LSD - Limited Standing", className="card-text", style={"textAlign":"center"}),
                             dcc.Graph(id="tab2_bus_graph"),
+                        ]),
+                    ],
+                    # className="card border-primary mb-3"
+                    ),
+                ]),
+
+            dbc.Row(
+                [
+                    dbc.Col([
+                        html.Div("Weather Data", className="card-header"),
+                        html.Div([
+                            dcc.Graph(figure=weatherfig),
                         ]),
                     ],
                     # className="card border-primary mb-3"

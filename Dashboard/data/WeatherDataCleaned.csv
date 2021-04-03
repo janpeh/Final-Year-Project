@@ -1,4 +1,4 @@
-,Station,Year,Month,Day,Daily Rainfall Total (mm),Highest 30 min Rainfall (mm),Highest 60 min Rainfall (mm),Highest 120 min Rainfall (mm),Mean Temperature (°C),Maximum Temperature (°C),Minimum Temperature (°C),Mean Wind Speed (km/h),Max Wind Speed (km/h),combined
+,Station,Year,Month,Day,Daily_Rainfall_Total(mm),Highest 30 min Rainfall (mm),Highest 60 min Rainfall (mm),Highest 120 min Rainfall (mm),Mean Temperature (°C),Maximum Temperature (°C),Minimum Temperature (°C),Mean Wind Speed (km/h),Max Wind Speed (km/h),combined
 0,Kent Ridge,2020,12,1,0,0,0,0,-,-,-,-,-,1/12/2020
 1,Kent Ridge,2020,12,2,6.4,5.8,6,6,-,-,-,-,-,2/12/2020
 2,Kent Ridge,2020,12,3,9.4,8,9.2,9.2,-,-,-,-,-,3/12/2020
