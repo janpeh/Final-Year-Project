@@ -18,16 +18,30 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 app.config.suppress_callback_exceptions = True
 
 # Dummy graph for shuttle bus | SAMPLE DATA
-df = pd.read_csv('./data/bus_data/new_bus_arrival_18121_14.csv')
-df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
-df = df.groupby(["date", "first_next_bus_load"], as_index=False).size()
-shutfig = px.bar(df, x=df["date"], y=df["size"], color=df["first_next_bus_load"])
+# df = pd.read_csv('./data/bus_data/new_bus_arrival_18121_14.csv')
+# df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
+# df = df.groupby(["date", "first_next_bus_load"], as_index=False).size()
+# shutfig = px.bar(df, x=df["date"], y=df["size"], color=df["first_next_bus_load"])
+
+df = pd.read_csv(f"./data/bus_data/new_bus_arrival_18081.csv") #18081 - 91 // 18201 - 191
+df = df[df["bus_number"]==91]
+df = df.groupby(["Hour", "Late_By"], as_index=False).size()
+fig321 = px.scatter(df, x=df["Hour"], y=df["size"], color=df["Late_By"], labels={
+                    "size": "Frequency | Occurences",
+                    "Hour": "Hour",
+                    "Late_By": "Late By in Seconds"
+                })
 
 # Taxi Availability Graph
 df_taxi = pd.read_csv('./data/taxi_data/relevant_taxi_availability.csv')
 df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
 df_taxi = df_taxi.groupby(["date", "count"], as_index=False).size()
-fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative")
+fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
+                labels={
+                    "size": "Occurence Daily (24 hours)",
+                    "date": "Date",
+                    "count": "Frequencies"
+                })
 
 # Weather Graph
 df_weather = pd.read_csv("./data/WeatherDataCleaned.csv")
@@ -141,7 +155,7 @@ tab1_content = dbc.Card(
                     dbc.Col([
                         html.Div("Shuttle Bus Dispatch Count - Dummy Data", className="card-header"),
                         html.Div([
-                            dcc.Graph(figure=shutfig),
+                            dcc.Graph(figure=fig321),
                         ]),
                     ],
                     # className="card border-primary mb-3"
