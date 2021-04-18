@@ -208,7 +208,7 @@ tab1_content = dbc.Card(
                 [
                     dbc.Col(html.Div(
                         [
-                            html.Div("Bus 91 Temporal Capture", className="card-header"),
+                            html.Div("Bus 191 Temporal Capture", className="card-header"),
                             html.Video(
                                 controls = True,
                                 autoPlay=True,
@@ -223,7 +223,7 @@ tab1_content = dbc.Card(
                 [
                     dbc.Col(html.Div(
                         [
-                            html.Div("Bus 91 Temporal Capture", className="card-header"),
+                            html.Div("Bus 191 Temporal Capture", className="card-header"),
                             html.Video(
                                 controls = True,
                                 autoPlay=True,
