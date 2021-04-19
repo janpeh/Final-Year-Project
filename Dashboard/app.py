@@ -21,15 +21,14 @@ app.config.suppress_callback_exceptions = True
 # df = pd.read_csv('./data/bus_data/new_bus_arrival_18121_14.csv')
 # df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
 # df = df.groupby(["date", "first_next_bus_load"], as_index=False).size()
-# shutfig = px.bar(df, x=df["date"], y=df["size"], color=df["first_next_bus_load"])
+# shutfig = px.bar(df, x=df["date"], y=df["size"], color=df["first_next_bus_load"]) color=df["Late_By"] "Late_By": "Late By in Seconds"
 
 df = pd.read_csv(f"./data/bus_data/new_bus_arrival_18081.csv") #18081 - 91 // 18201 - 191
 df = df[df["bus_number"]==91]
 df = df.groupby(["Hour", "Late_By"], as_index=False).size()
-fig321 = px.scatter(df, x=df["Hour"], y=df["size"], color=df["Late_By"], labels={
+fig321 = px.scatter(df, x=df["Hour"], y=df["size"], , labels={
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
-                    "Late_By": "Late By in Seconds"
                 })
 
 # Taxi Availability Graph
