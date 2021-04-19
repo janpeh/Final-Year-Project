@@ -26,7 +26,7 @@ app.config.suppress_callback_exceptions = True
 df = pd.read_csv(f"./data/bus_data/new_bus_arrival_18081.csv") #18081 - 91 // 18201 - 191
 df = df[df["bus_number"]==91]
 df = df.groupby(["Hour", "Late_By"], as_index=False).size()
-fig321 = px.scatter(df, x=df["Hour"], y=df["size"], , labels={
+fig321 = px.scatter(df, x=df["Hour"], y=df["size"], labels={
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
                 })
