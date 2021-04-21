@@ -296,7 +296,11 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
                     "size": "Frequency | Occurences",
                     "date": "Date",
                     "first_next_bus_load": "Bus Load"
-                },)
+                },
+                color_discrete_map={
+                    "SEA": "green",
+                    "SDA": "red"
+                })
 
         return None, fig, True, True
 
@@ -309,7 +313,11 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
                     "size": "Frequency | Occurences",
                     "date": "Hour (24h)",
                     "first_next_bus_load": "Bus Load"
-                },)
+                },
+                color_discrete_map={
+                    "SEA": "green",
+                    "SDA": "red"
+                })
 
         return None, fig, True, True
 
@@ -326,7 +334,11 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
                     "size": "Frequency | Occurences",
                     "Weekday": "Day",
                     "first_next_bus_load": "Bus Load"
-                },)
+                },
+                color_discrete_map={
+                    "SEA": "green",
+                    "SDA": "red"
+                })
 
         return None, fig, True, True
 
@@ -344,7 +356,11 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
                     "first_next_bus_load": "Bus Load"
-                },)
+                },
+                color_discrete_map={
+                    "SEA": "green",
+                    "SDA": "red"
+                })
 
         return None, fig, True, False
     
@@ -361,7 +377,11 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
                     "first_next_bus_load": "Bus Load"
-                },)
+                },
+                color_discrete_map={
+                    "SEA": "green",
+                    "SDA": "red"
+                })
 
         return string_prefix + date_string, fig, False, True
 
