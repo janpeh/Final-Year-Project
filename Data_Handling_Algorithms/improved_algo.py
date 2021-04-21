@@ -23,12 +23,18 @@ def late_by():
     late_by_in_seconds = ""
     current_time = ""
 
-    for index in range (0, total_number_of_rows - 1): 
+    #New
+    initial_first_next_bus_load = df['first_next_bus_load'][0]
+
+    for index in range (0, total_number_of_rows - 1):
         if current_bus_number != df["bus_number"][index]: 
             current_bus_number = df["bus_number"][index]
             initial_expected_arrival_time = df["first_next_bus_estimated_arrival"][index] # the first initial of that bus number
             # df.set_value(index, 'Change Bus Number', str(current_bus_number))
-            df.at[index, 'Change Bus Number']=str(current_bus_number)
+            # df.at[index, 'Change Bus Number']=str(current_bus_number)
+
+            #New
+            initial_first_next_bus_load = df["first_next_bus_load"][index] # the first initial load of that bus number
 
         if df["bus_number"][index+1] == current_bus_number:
             current_time = df["date_time"][index]
@@ -44,8 +50,16 @@ def late_by():
                     # print(index, late_by_in_seconds)
                     # df.set_value(index, 'Late_By', late_by_in_seconds)
                     df.at[index, 'Late_By']=late_by_in_seconds
+
+                else:
+                    df.at[index, 'Late_By']=0
                     
                 initial_expected_arrival_time = new2_expected_arrival_time
+
+                #New
+                initial_first_next_bus_load = df["first_next_bus_load"][index]
+                df.at[index, 'Final Load']=initial_first_next_bus_load
+
 
 def create_hour_col():
     df["Hour"] = pd.DatetimeIndex(df['date_time']).hour

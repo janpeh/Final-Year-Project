@@ -291,11 +291,12 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
         df = pd.read_csv(f"./data/bus_data/new_bus_arrival_{bus_stop_no}.csv")
         df = df[df["bus_number"]==bus_no]
         df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
-        df = df.groupby(["date", "first_next_bus_load"], as_index=False).size()
-        fig = px.bar(df, x=df["date"], y=df["size"], color=df["first_next_bus_load"], barmode="group", labels={
+        # df = df.groupby(["date", "first_next_bus_load"], as_index=False).size() # OLD
+        df = df.groupby(["date", "Final Load"], as_index=False).size()
+        fig = px.bar(df, x=df["date"], y=df["size"], color=df["Final Load"], barmode="group", labels={ #HERE AS WELL
                     "size": "Frequency | Occurences",
                     "date": "Date",
-                    "first_next_bus_load": "Bus Load"
+                    "Final Load": "Bus Load" #HERE AS WELL
                 },
                 color_discrete_map={
                     "SEA": "green",
@@ -307,12 +308,13 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
     if radioitem == "all_hour":
         df = pd.read_csv(f"./data/bus_data/new_bus_arrival_{bus_stop_no}.csv")
         df = df[df["bus_number"]==bus_no]
-        #df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
-        df = df.groupby(["Hour", "first_next_bus_load"], as_index=False).size()
-        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["first_next_bus_load"], barmode="group", labels={
+        # df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
+        # df = df.groupby(["Hour", "first_next_bus_load"], as_index=False).size() # OLD
+        df = df.groupby(["Hour", "Final Load"], as_index=False).size()
+        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["Final Load"], barmode="group", labels={ #HERE AS WELL
                     "size": "Frequency | Occurences",
                     "date": "Hour (24h)",
-                    "first_next_bus_load": "Bus Load"
+                    "Final Load": "Bus Load" #HERE AS WELL
                 },
                 color_discrete_map={
                     "SEA": "green",
@@ -329,11 +331,12 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
         df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
         df["Weekday"] = df["date"].dt.day_name()
         df['Weekday']=df['Weekday'].astype(cat_type)
-        df = df.groupby(["Weekday", "first_next_bus_load"], as_index=False).size()
-        fig = px.bar(df, x=df["Weekday"], y=df["size"], color=df["first_next_bus_load"], barmode="group", labels={
+        # df = df.groupby(["Weekday", "first_next_bus_load"], as_index=False).size() # OLD
+        df = df.groupby(["Weekday", "Final Load"], as_index=False).size()
+        fig = px.bar(df, x=df["Weekday"], y=df["size"], color=df["Final Load"], barmode="group", labels={ #HERE AS WELL
                     "size": "Frequency | Occurences",
                     "Weekday": "Day",
-                    "first_next_bus_load": "Bus Load"
+                    "Final Load": "Bus Load" #HERE AS WELL
                 },
                 color_discrete_map={
                     "SEA": "green",
@@ -350,12 +353,13 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
         df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
         df["Weekday"] = df["date"].dt.day_name()
         df['Weekday']=df['Weekday'].astype(cat_type)
-        df = df.groupby(["Weekday", "Hour", "first_next_bus_load"], as_index=False).size()
+        # df = df.groupby(["Weekday", "Hour", "first_next_bus_load"], as_index=False).size() # OLD
+        df = df.groupby(["Weekday", "Hour", "Final Load"], as_index=False).size()
         df = df[df["Weekday"] == weekday]
-        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["first_next_bus_load"], barmode="group", labels={
+        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["Final Load"], barmode="group", labels={ #HERE AS WELL
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
-                    "first_next_bus_load": "Bus Load"
+                    "Final Load": "Bus Load" #HERE AS WELL
                 },
                 color_discrete_map={
                     "SEA": "green",
@@ -371,12 +375,13 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
         df = pd.read_csv(f"./data/bus_data/new_bus_arrival_{bus_stop_no}.csv")
         df = df[df["bus_number"]==bus_no]
         df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
-        df = df.groupby(["date", 'Hour', "first_next_bus_load"], as_index=False).size()
+        # df = df.groupby(["date", 'Hour', "first_next_bus_load"], as_index=False).size() # OLD
+        df = df.groupby(["date", 'Hour', "Final Load"], as_index=False).size() # OLD
         df = df[df["date"]==date_object.strftime("%#m/%#d/%Y")]
-        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["first_next_bus_load"], barmode="group", labels={
+        fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["Final Load"], barmode="group", labels={ #HERE AS WELL
                     "size": "Frequency | Occurences",
                     "Hour": "Hour",
-                    "first_next_bus_load": "Bus Load"
+                    "Final Load": "Bus Load" #HERE AS WELL
                 },
                 color_discrete_map={
                     "SEA": "green",
