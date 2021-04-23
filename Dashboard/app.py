@@ -32,15 +32,15 @@ fig321 = px.scatter(df, x=df["Hour"], y=df["size"], labels={
                 })
 
 # Taxi Availability Graph
-df_taxi = pd.read_csv('./data/taxi_data/relevant_taxi_availability.csv')
-df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
-df_taxi = df_taxi.groupby(["date", "count"], as_index=False).size()
-fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
-                labels={
-                    "size": "Occurence Daily (24 hours)",
-                    "date": "Date",
-                    "count": "Frequencies"
-                })
+# df_taxi = pd.read_csv('./data/taxi_data/relevant_taxi_availability.csv')
+# df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
+# df_taxi = df_taxi.groupby(["date", "count"], as_index=False).size()
+# fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
+#                 labels={
+#                     "size": "Occurence Daily (24 hours)",
+#                     "date": "Date",
+#                     "count": "Frequencies"
+#                 })
 
 # Weather Graph
 df_weather = pd.read_csv("./data/WeatherDataCleaned.csv")
@@ -643,25 +643,57 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
         return string_prefix + date_string, fig, False, True
 ###################################################################################
 
+# TAB 3 
+
 tab3_content = dbc.Card(
     dbc.CardBody(
         [
             dbc.Row(
+                [   
+                    dbc.Col([
+                        html.Div("Taxi Phase", className="card-header"),
+                        dcc.Dropdown(
+                            id="taxi_phase_dropdown",
+                            options=[
+                                {'label': 'Phase 1 (24 Dec 20- 26 Jan 21)', 'value': '1'},
+                                {'label': 'Phase 2 (30 Jan 21 - 3 Mar 21)', 'value': '2'},
+                            ],
+                            value="1"
+                        ),
+                    ]),
+
+                    dbc.Col([
+                        html.Div("Visualization Options", className="card-header", style={"margin-top":0}),
+                        dcc.Dropdown(
+                            id="tab3_viz_option",
+                            options=[
+                                {"label": "Show All Dates", "value": "month"},
+                                {"label": "Show All Hours", "value": "day"},
+                            ],
+                            value="month"
+                        ),
+                    ]), 
+                ]),
+
+            dbc.Row(
                 [
                     dbc.Col(html.Div(
                         [
-                            html.Div("Taxi Temporal Capture", className="card-header"),
-                            html.Video(
-                                controls = True,
-                                autoPlay=True,
-                                src='/static/taxi_time_series.mp4'
+                            html.Div("Taxi Availability Count on a Daily Basis", className="card-header"),
+                            html.Div(
+                                [
+                                    # dcc.Graph(figure=fig3)
+                                    dcc.Graph(id="tab3_taxi_graph")
+                                ],
+                                className="card-body"
                             ),
                         ],
                         className="card border-primary mb-3"
-                        )),
-                ]),
+                    )),
+                ],
+                style={"margin-top":30}),
 
-                dbc.Row(
+            dbc.Row(
                 [
                     dbc.Col(html.Div(
                         [
@@ -675,8 +707,8 @@ tab3_content = dbc.Card(
                         className="card border-primary mb-3"
                         )),
                 ]),
-
-                dbc.Row(
+            
+            dbc.Row(
                 [
                     dbc.Col(html.Div(
                         [
@@ -691,36 +723,65 @@ tab3_content = dbc.Card(
                         )),
                 ]),
 
-                dbc.Col(html.Div(
+            dbc.Row(
+                [
+                    dbc.Col(html.Div(
                         [
-                            html.Div("Taxi Availability Count on a Daily Basis", className="card-header"),
-                            # html.Div([
-                            #     dcc.Dropdown(
-                            #         id='busstop_dropdown',
-                            #         options=[
-                            #             {'label': 'Ayer Rajah Ave (one-north Stn)', 'value': '18051'},
-                            #             {'label': 'Ayer Rajah Ave (Opp one-north Stn)', 'value': '18059'},
-                            #             {'label': 'Portsdown Rd (one-north Stn/Galaxis)', 'value': '18159'},
-                            #             {'label': 'Portsdown Rd (Opp one-north Stn/Galaxis)', 'value': '18151'},
-                            #             {'label': 'Buona Vista Flyover (Opp Ayer Rajah Ind Est)', 'value': '18121'},
-                            #             {'label': 'Buona Vista Flyover (Ayer Rajah Ind Est)', 'value': '18129'},
-                            #         ],
-                            #         value='busstop'
-                            #     ),
-                            #     html.Div(id='dd-output-container')
-                            # ]),
-                            html.Div(
-                                [
-                                    dcc.Graph(figure=fig3)
-                                ],
-                                className="card-body"
+                            html.Div("Taxi Temporal Capture", className="card-header"),
+                            html.Video(
+                                controls = True,
+                                autoPlay=True,
+                                src='/static/taxi_time_series.mp4'
                             ),
                         ],
-                        className="card border-primary mb-3"
-                    ))
+                        className="card border-primary mb-3",
+                        
+                        )),
+                ]),                
         ]    
     )
 )
+
+##########################################################################################################################
+#TAB 3
+
+# Choose Taxi Phase
+@app.callback(
+    Output("tab3_taxi_graph", "figure"),
+    Input("taxi_phase_dropdown", "value"),
+    Input("tab3_viz_option", "value"),
+)
+def select_taxi_phase(taxi_phase, taxi_format):
+    df_taxi = pd.read_csv(f"./data/taxi_data/{taxi_phase}.csv")
+
+    if taxi_format == 'month':
+        df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
+        df_taxi = df_taxi.groupby(["date", "count"], as_index=False).size()
+        fig3 = px.bar(df_taxi, x=df_taxi["date"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
+                        labels={
+                            "size": "Occurence Daily (24 hours)",
+                            "date": "Date",
+                            "count": "Frequencies"
+                        })
+
+        return fig3
+
+    elif taxi_format == "day":   
+        df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
+        df_taxi = df_taxi.groupby(["Hour", "count"], as_index=False).size()
+        fig3 = px.bar(df_taxi, x=df_taxi["Hour"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
+                        labels={
+                            "size": "Occurences",
+                            "Hour": "Hour",
+                            "count": "Frequencies"
+                        })
+        return fig3
+
+#     all_buses = df["bus_number"].unique()
+#     options = [{"label": bus_no, "value": bus_no} for bus_no in all_buses]
+#     value = all_buses[0] #default to first option
+
+#     return options, value
 
 
 tab4_content = dbc.Card(
