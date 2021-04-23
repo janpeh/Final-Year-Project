@@ -569,7 +569,6 @@ def update_output(date_value, bus_stop_no, bus_no, radioitem, weekday):
     if radioitem == "all_hour":
         df = pd.read_csv(f"./data/bus_data/new_bus_arrival_{bus_stop_no}.csv")
         df = df[df["bus_number"]==bus_no]
-        #df["date"] = pd.to_datetime(df["date"], format="%m/%d/%Y")
         df = df.groupby(["Hour", "Late_By"], as_index=False).size()
         fig = px.bar(df, x=df["Hour"], y=df["size"], color=df["Late_By"], labels={
                     "size": "Frequency | Occurences",
@@ -769,21 +768,21 @@ def select_taxi_phase(taxi_phase, taxi_format):
     elif taxi_format == "day":   
         df_taxi["date"] = pd.to_datetime(df_taxi["date"], format="%m/%d/%Y")
         df_taxi = df_taxi.groupby(["Hour", "count"], as_index=False).size()
-        fig3 = px.bar(df_taxi, x=df_taxi["Hour"], y=df_taxi["size"], color=df_taxi["count"], barmode="relative", 
+        fig3 = px.bar(df_taxi, x=df_taxi["Hour"], y=df_taxi["count"], barmode="relative", 
                         labels={
                             "size": "Occurences",
                             "Hour": "Hour",
-                            "count": "Frequencies"
-                        })
+                            "count": "Available Taxis"
+                        },
+                        # color_discrete_map={
+                        #     "Frequencies": "green",
+                        # }
+                    )
         return fig3
 
-#     all_buses = df["bus_number"].unique()
-#     options = [{"label": bus_no, "value": bus_no} for bus_no in all_buses]
-#     value = all_buses[0] #default to first option
+##########################################################################################################################################
 
-#     return options, value
-
-
+# TAB 4
 tab4_content = dbc.Card(
     dbc.CardBody(
         [
